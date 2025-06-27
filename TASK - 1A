@@ -1,0 +1,10 @@
+subjects = ["I","YOU"]
+verbs = ["PLAY","LOVE]
+objects = ["CRIKET","LUDO"]
+print("Generates sentences:\n") 
+for subject in subjects:
+for verbs in verbs:
+for objects in objects:
+sentence = f"{subject} {verb} {obj}."
+print(sentence)
+
