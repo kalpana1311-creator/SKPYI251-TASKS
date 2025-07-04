@@ -1,0 +1,78 @@
+class Book:
+    def __init__(self, title, author, publisher, price):
+        self._title = title
+        self._author = author
+        self._publisher = publisher
+        self._price = price
+        self._royalty_amount = 0
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        self._title = value
+
+    @property
+    def author(self):
+        return self._author
+
+    @author.setter
+    def author(self, value):
+        self._author = value
+
+    @property
+    def publisher(self):
+        return self._publisher
+
+    @publisher.setter
+    def publisher(self, value):
+        self._publisher = value
+
+    @property
+    def price(self):
+        return self._price
+
+    @price.setter
+    def price(self, value):
+        self._price = value
+
+    def royalty(self, copies_sold):
+        royalty = 0
+        if copies_sold <= 500:
+            royalty = 0.10 * self.price * copies_sold
+        elif copies_sold <= 1500:
+            royalty = (0.10 * self.price * 500) + (0.125 * self.price * (copies_sold - 500))
+        else:
+            royalty = (0.10 * self.price * 500) + (0.125 * self.price * 1000) + (0.15 * self.price * (copies_sold - 1500))
+
+        self._royalty_amount = royalty
+        return royalty
+
+class Ebook(Book):
+    def __init__(self, title, author, publisher, price, format):
+        super().__init__(title, author, publisher, price)
+        self._format = format
+
+    @property
+    def format(self):
+        return self._format
+
+    @format.setter
+    def format(self, value):
+        self._format = value
+
+    def royalty(self, copies_sold):
+        gross_royalty = super().royalty(copies_sold)
+        gst_deduction = 0.12 * gross_royalty
+        net_royalty = gross_royalty - gst_deduction
+        return net_royalty
+
+if __name__ == "__main__":
+    book = Book("Python Basics", "John Doe", "ABC Publishers", 500)
+    print("Royalty for 2000 copies (Printed Book): ₹", book.royalty(2000))
+
+    # Ebook Example
+    ebook = Ebook("Python Basics", "John Doe", "ABC Publishers", 500, "PDF")
+    print("Royalty for 2000 copies (Ebook with GST): ₹", ebook.royalty(2000))
