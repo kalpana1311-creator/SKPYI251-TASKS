@@ -1,0 +1,9 @@
+pip install emoji
+
+import emoji
+text_with_emojis = "I love 🍕 and I am feeling 😊 today!"
+text_converted = emoji.demojize(text_with_emojis, language="en")
+print("Original Text:", text_with_emojis)
+print("Converted Text:", text_converted)
+text_back_to_emoji = emoji.emojize(text_converted, language="en")
+print("Back to Emoji:", text_back_to_emoji)
