@@ -1,0 +1,37 @@
+pip install pyautogui opencv-python
+
+
+import cv2
+import numpy as np
+import pyautogui
+
+def screen_recorder(output_file="screen_record.avi", duration=10):
+    screen_size = pyautogui.size()
+    fourcc = cv2.VideoWriter_fourcc(*"XVID")
+    out = cv2.VideoWriter(output_file, fourcc, 20.0, screen_size)
+
+    print("Recording screen...")
+    for _ in range(int(20 * duration)):
+        img = pyautogui.screenshot()
+        frame = np.array(img)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        out.write(frame)
+
+    out.release()
+    print("Screen recording saved as", output_file)
+
+screen_recorder(duration=10)
+
+pip install sounddevice scipy
+
+import sounddevice as sd
+from scipy.io.wavfile import write
+
+def voice_recorder(output_file="voice_record.wav", duration=10, samplerate=44100):
+    print("Recording audio...")
+    audio = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=2)
+    sd.wait()
+    write(output_file, samplerate, audio)
+    print("Voice recording saved as", output_file)
+
+voice_recorder(duration=10)
